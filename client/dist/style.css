@@ -1,3 +1,59 @@
 body {
   font-family: sans-serif, arial;
 }
+
+.movieListEntry{
+  display: flex;
+  gap: 10px;
+  border-radius: 5px;
+  border-style: solid;
+  border-color: gray;
+  border-width: 2px;
+  padding: 10px;
+  font-family: 'Quicksand', sans-serif;
+  margin: 15px;
+  justify-content: space-between;
+}
+
+
+
+.header{
+  display: flex;
+  background-color: rgb(235, 228, 228);
+  justify-content: center;
+}
+
+h1{
+  font-family: 'Quicksand', sans-serif;
+}
+
+.bars{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+form{
+  padding: 25px
+}
+
+input{
+  padding: 10px;
+  margin: 5px;
+}
+
+button{
+  background-color: pink;
+  font-family: 'Quicksand', sans-serif;
+  border-radius: 5px;
+}
+
+.watchToggle{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#yes{
+  background-color: white;
+}
+
+
