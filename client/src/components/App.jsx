@@ -6,7 +6,7 @@ import Search from './Search.jsx';
 import AddMovie from './AddMovie.jsx';
 import ToWatch from './ToWatch.jsx';
 import Watched from './Watched.jsx';
-
+var parse = require('./parse.js')
 
 
 class App extends React.Component {
@@ -32,10 +32,12 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({
-      movieList: [],
-      currList: [],
-    })
+    parse.getAll((results) => {
+      this.setState({
+        movieList: results,
+        currList: results
+      });
+    });
   }
 
   handleSubmitChange(event) {

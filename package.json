@@ -6,7 +6,7 @@
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
-    "start": "nodemon server/index.js",
+    "start": "nodemon server/app.js",
     "react-dev": "webpack --config ./webpack.config.js  -w"
   },
   "devDependencies": {
@@ -21,9 +21,14 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
+    "jquery": "^3.6.0",
+    "morgan": "^1.10.0",
+    "mysql2": "^2.3.3",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
+    "sequelize": "^6.21.3",
     "underscore": "^1.12.1"
   }
 }
