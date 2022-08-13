@@ -1,10 +1,8 @@
 import React from 'react';
 
 const MovieListEntry = function (props) {
-  var contain = props.status.includes(props.movie.title);
-
   var style = {
-    backgroundColor: contain ? 'pink' : 'white'
+    backgroundColor: props.movie.status === 'watched' ? 'pink' : 'white'
   }
 
   return(

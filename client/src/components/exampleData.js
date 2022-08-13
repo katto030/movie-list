@@ -3,7 +3,7 @@ var movies = [
   {title: 'Hackers'},
   {title: 'The Grey'},
   {title: 'Sunshine'},
-  {title: 'Ex Machina'},
+  {title: 'Ex Machina'}
 ];
 
 export default movies;

@@ -20,14 +20,13 @@ class App extends React.Component {
     this.toggle = this.handleToggleClick.bind(this);
     this.watchedClick = this.handleWatchedClick.bind(this);
     this.toWatchClick = this.handleToWatchClick.bind(this);
+    this.titleClick = this.titleClick.bind(this);
 
     this.state = {
       movieList: [],
       currList: [],
       search: '',
-      toAdd: '',
-      watched: [],
-      toWatch: []
+      toAdd: ''
     }
   }
 
@@ -48,22 +47,17 @@ class App extends React.Component {
 
   handleSubmitClick() {
     event.preventDefault();
-    var temp = [];
     var target = this.state.search.toLowerCase();
-    this.state.movieList.forEach(function(movie) {
-      var test = movie.title.toLowerCase().includes(target);
-      if (test) {
-        temp.push(movie);
-      }
-    })
-
-    if (temp.length === 0) {
-      temp = [{title: 'no movie by that name found'}]
-    }
-
-    this.setState({
-      currList: temp
-    })
+    parse.getAll((results) => {
+      var searchResult = results.filter((movie) => {
+        return movie.title.toLowerCase() === target;
+      })
+      searchResult.length ? null : searchResult = [{title: 'no movie by that name found'}];
+      this.setState({
+        movieList: results,
+        currList: searchResult
+      });
+    });
     document.getElementById('searchForm').reset();
   }
 
@@ -76,54 +70,65 @@ class App extends React.Component {
   handleAddClick() {
     event.preventDefault();
     var toAddMovie = {title: `${this.state.toAdd}`}
-    var temp = this.state.movieList.slice();
-    temp.unshift(toAddMovie)
-    var tempToWatch = this.state.toWatch.slice();
-    tempToWatch.push(this.state.toAdd);
-    this.setState({
-      movieList: temp,
-      currList: temp,
-      toWatch: tempToWatch
-    })
+    parse.addMovie(toAddMovie);
+    parse.getAll((results) => {
+      this.setState({
+        movieList: results,
+        currList: results
+      });
+    });
     document.getElementById('addForm').reset();
   }
 
-  handleToWatchClick() { // Change to ToWatch tab?
-    var mapped = this.state.toWatch.map(function(movie) {
-      return {title: movie};
-    })
-    this.setState({
-      currList: mapped
-    })
+  handleToWatchClick() {
+    parse.getAll((results) => {
+      this.setState({
+        movieList: results,
+        currList: results
+      });
+      var temp = this.state.movieList.filter((movie) => {
+        return movie.status === 'unwatched';
+      })
+      this.setState({
+        currList: temp
+      });
+    });
   }
 
   handleWatchedClick() {
-    var mapped = this.state.watched.map(function(movie) {
-      return {title: movie}
-    })
-    this.setState({
-      currList: mapped
-    })
+    parse.getAll((results) => {
+      this.setState({
+        movieList: results,
+        currList: results
+      });
+      var temp = this.state.movieList.filter((movie) => {
+        return movie.status === 'watched';
+      })
+      this.setState({
+        currList: temp
+      });
+    });
   }
 
   handleToggleClick(event) {
     var curr = event.target.value;
-    var tempWatched = this.state.watched.slice();
-    var tempToWatch = this.state.toWatch.slice();
-    var contain = tempWatched.includes(curr);
+    var targetMovie = this.state.movieList.find((movie) => (movie.title === curr));
+    parse.updateStatus(targetMovie);
+    parse.getAll((results) => {
+      this.setState({
+        movieList: results,
+        currList: results
+      });
+    });
+  }
 
-    if (contain) {
-      tempWatched.splice(tempWatched.indexOf(curr), 1);
-      tempToWatch.push(curr);
-    } else {
-      tempToWatch.splice(tempToWatch.indexOf(curr), 1);
-      tempWatched.push(curr);
-    }
-
-    this.setState({
-      watched: tempWatched,
-      toWatch: tempToWatch,
-    })
+  titleClick() {
+    parse.getAll((results) => {
+      this.setState({
+        movieList: results,
+        currList: results
+      });
+    });
   }
 
   render() {
@@ -131,7 +136,7 @@ class App extends React.Component {
       <div>
         <div className="nav">
           <div className="header">
-            <h1>MovieList</h1>
+            <h1 onClick={this.titleClick}>MovieList</h1>
           </div>
           <div className="bars">
             <AddMovie add={this.addChange} click={this.addClick}/>

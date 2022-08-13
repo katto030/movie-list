@@ -10,4 +10,19 @@ var getAll = (callback) => {
   })
 }
 
+var addMovie = (data) => {
+  axios.post('/classes/movies', data)
+  // .then((res) => console.log(data, res))
+  .catch((err) => {
+    console.error(err);
+  })
+}
+
+var updateStatus = (movie) => {
+  axios.post('/classes/movies/update', movie)
+  .catch((err) => console.error(err));
+}
+
 module.exports.getAll = getAll;
+module.exports.addMovie = addMovie;
+module.exports.updateStatus = updateStatus;

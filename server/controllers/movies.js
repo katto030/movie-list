@@ -23,7 +23,21 @@ var postMovies = (req, res) => {
   })
 };
 
+var updateMovie = (req, res) => {
+  var queryStr = 'UPDATE movies SET status = ? WHERE title = ?'
+  var queryArgs;
+  req.body.status === 'unwatched' ? queryArgs = ['watched'] : queryArgs = ['unwatched']
+  queryArgs.push(req.body.title);
+  models.postMovies(queryStr, queryArgs, (err, results) => {
+    if (err) {
+      res.sendStatus(404);
+    } else {
+      res.sendStatus(201);
+    }
+  })
+}
 
 
 module.exports.getMovies = getMovies;
 module.exports.postMovies = postMovies;
+module.exports.updateMovie = updateMovie;

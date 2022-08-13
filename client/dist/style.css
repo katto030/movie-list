@@ -11,7 +11,7 @@ body {
   border-width: 2px;
   padding: 10px;
   font-family: 'Quicksand', sans-serif;
-  margin: 15px;
+  margin: 20px 150px;
   justify-content: space-between;
 }
 
@@ -25,6 +25,10 @@ body {
 
 h1{
   font-family: 'Quicksand', sans-serif;
+}
+
+h1:hover {
+  color: rgb(244, 141, 158);
 }
 
 .bars{

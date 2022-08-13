@@ -7,4 +7,6 @@ router.get('/movies', controller.getMovies);
 
 router.post('/movies', controller.postMovies);
 
+router.post('/movies/update', controller.updateMovie)
+
 module.exports = router;
